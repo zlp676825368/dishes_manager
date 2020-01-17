@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <el-page-header @back="goBack" content="详情页面"></el-page-header>
     <el-card>
       <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
@@ -35,7 +35,7 @@
           <el-input type="number" min="1" v-model="formLabelAlign.type"></el-input>
         </el-form-item>
         <el-form-item label="菜品描述">
-          <el-input type="textarea" :rows="2" placeholder="请输入描述信息" v-model="textarea"></el-input>
+          <el-input type="textarea" :rows="3" placeholder="请输入描述信息" v-model="textarea"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="mini">立即创建</el-button>
@@ -109,17 +109,24 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.el-card {
-  position: relative;
-  height: 500px;
-  margin-top: 10px;
-  .el-form {
-    width: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%);
-    .el-select {
-      width: 100%;
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .el-page-header {
+    line-height: 40px;
+  }
+  .el-card {
+    flex: 1;
+    position: relative;
+    .el-form{
+        position: absolute;
+        width: 50%;
+        left: 50%;
+        transform: translate(-50%);
+        .el-select{
+            width: 100%;
+        }
     }
   }
 }
