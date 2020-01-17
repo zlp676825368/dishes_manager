@@ -25,7 +25,9 @@ import {
     Select,
     Option,
     PageHeader,
-    Upload
+    Upload,
+    Tabs,
+    TabPane
 } from 'element-ui'
 
 Vue.use(Button)
@@ -56,4 +58,6 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(PageHeader)
 Vue.use(Upload)
+Vue.use(Tabs)
+Vue.use(TabPane)
 Vue.prototype.$message = Message
