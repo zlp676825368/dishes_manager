@@ -1,0 +1,13 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.el-breadcrumb{
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+.el-card{
+    height: 100%;
+    
+}
