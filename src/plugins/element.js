@@ -21,7 +21,11 @@ import {
     TableColumn,
     Tooltip,
     Dialog,
-    Pagination
+    Pagination,
+    Select,
+    Option,
+    PageHeader,
+    Upload
 } from 'element-ui'
 
 Vue.use(Button)
@@ -48,4 +52,8 @@ Vue.use(TableColumn)
 Vue.use(Tooltip)
 Vue.use(Dialog)
 Vue.use(Pagination)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(PageHeader)
+Vue.use(Upload)
 Vue.prototype.$message = Message

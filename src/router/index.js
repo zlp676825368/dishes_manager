@@ -12,15 +12,21 @@ const routes = [
   {
     path: '/home',
     component: () => import('views/Home.vue'),
-    redirect:"/welcome",
-    children:[
-      {path:'/welcome',component: () => import('views/Welcome.vue')},
-      {path:'/category',component: () => import('components/Category.vue')},
-      {path:'/dishes',component: () => import('components/Dishes.vue')},
-      {path:'/historyOrder',component: () => import('components/HistoryOrder.vue')},
-      {path:'/report',component: () => import('components/Report.vue')},
-      {path:'/setting',component: () => import('components/Setting.vue')},
-      {path:'/todayOrder',component: () => import('components/TodayOrder.vue')}
+    redirect: "/welcome",
+    children: [
+      { path: '/welcome', component: () => import('views/Welcome.vue') },
+      { path: '/category', component: () => import('components/Category.vue') },
+      {
+        path: '/dishes', component: () => import('components/dishe/Dishes.vue'),
+        // children:[
+        //   {name:'dishes-detail', path:'/detail',component: () => import('components/dishe/DishesDetail.vue')}
+        // ]
+      },
+      {name:'dishes-detail', path:'/dishesDetail',component: () => import('components/dishe/DishesDetail.vue')},
+      { path: '/historyOrder', component: () => import('components/HistoryOrder.vue') },
+      { path: '/report', component: () => import('components/Report.vue') },
+      { path: '/setting', component: () => import('components/Setting.vue') },
+      { path: '/todayOrder', component: () => import('components/TodayOrder.vue') }
     ]
   }
 ]
@@ -31,7 +37,7 @@ const router = new VueRouter({
   routes
 })
 //全局导航守卫
-router.beforeEach((to,from,next)=>{
+router.beforeEach((to, from, next) => {
   // if (to.path=="/") {
   //   return next();
   // }
@@ -39,7 +45,7 @@ router.beforeEach((to,from,next)=>{
   // if (token==null) {
   //   return next({to:"/"})
   // }
-  next({redirect:to.path});
+  next({ redirect: to.path });
 })
 
 export default router

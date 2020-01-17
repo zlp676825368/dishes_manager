@@ -9,14 +9,14 @@
       <el-row :gutter="10">
         <el-col :span="7">
           <div>
-            <el-input placeholder="请输入内容" v-model.trim="categroyName" clearable>
-              <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-input size="mini" placeholder="请输入内容" v-model.trim="categroyName" clearable>
+              <el-button size="mini" slot="append" icon="el-icon-search"></el-button>
             </el-input>
           </div>
         </el-col>
         <!--头部添加按钮-->
         <el-col :span="3">
-          <el-button type="primary" @click="addCategory">添加分类</el-button>
+          <el-button type="primary" size="mini" @click="addCategory">添加分类</el-button>
         </el-col>
       </el-row>
       <el-table

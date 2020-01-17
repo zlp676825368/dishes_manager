@@ -5,7 +5,7 @@
         <img src="~/assets/logo.png" alt />
         <span>点餐后台管理系统</span>
       </div>
-      <el-button type="info" @click="out">退出</el-button>
+      <el-button type="info" size="mini" @click="out">退出</el-button>
     </el-header>
     <el-container>
       <!--侧边栏-->
