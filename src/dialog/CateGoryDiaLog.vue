@@ -6,9 +6,9 @@
     :close-on-click-modal="false"
     @open="open"
   >
-    <el-form :model="form" ref="form" :rules="formRules" clearValidate>
+    <el-form :model="categroy" ref="categroy" :rules="formRules" clearValidate>
       <el-form-item label="分类名称" label-width="80px" prop="categoryName">
-        <el-input v-model.trim="form.categoryName" autocomplete="off"></el-input>
+        <el-input v-model.trim="categroy.categoryName" autocomplete="off"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -29,9 +29,6 @@ export default {
     };
     return {
       title: "",
-      form: {
-        categoryName: null
-      },
       formRules: {
         categoryName: [{ validator: validateName, trigger: "blur" }]
       }
@@ -39,17 +36,19 @@ export default {
   },
   methods: {
     close() {
-      this.form.categoryName = null;
       this.$emit("closeDialog", {});
     },
     open() {
-      if (this.categroy != null) {
-        this.title = "修改分类";
-        this.form.categoryName = this.categroy.categroyName;
-      } else {
-        this.title = "新增分类";
+      if(this.categroy.categoryId===0){
+        this.title="新增分类";
+      }else{
+        this.title="修改分类";
       }
+
     }
+  },
+  destroyed(){
+    
   },
   props: {
     dialogVisible: {
@@ -58,7 +57,10 @@ export default {
     },
     categroy: {
       type: Object,
-      default: null
+      default: {
+        'categoryId':0,
+        'categoryName':''
+      }
     }
   }
 };

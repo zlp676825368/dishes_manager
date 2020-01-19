@@ -27,7 +27,7 @@ import {
     PageHeader,
     Upload,
     Tabs,
-    TabPane
+    TabPane,
 } from 'element-ui'
 
 Vue.use(Button)

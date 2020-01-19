@@ -27,8 +27,8 @@
         :row-style="{height:'32px'}"  
         :cell-style="{padding:'4px'}"
       >
-        <el-table-column prop="id" label="ID"></el-table-column>
-        <el-table-column prop="categroyName" label="分类名称"></el-table-column>
+        <el-table-column prop="categoryId" label="ID"></el-table-column>
+        <el-table-column prop="categoryName" label="分类名称"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!--修改按钮-->
@@ -46,16 +46,6 @@
                 icon="el-icon-edit"
               ></el-button>
             </el-tooltip>
-            <!--删除按钮-->
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="删除"
-              placement="top-start"
-              :enterable="false"
-            >
-              <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
-            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
@@ -67,17 +57,19 @@
 <script>
 import CateGoryDiaLog from "dialog/CateGoryDiaLog";
 export default {
+  created(){
+    this.getCategorys();
+  },
   data() {
     return {
       //搜索框model
       categroyName: "",
-      categroy: {},
+      categroy: {
+        'categoryId':0,
+        'categoryName':''
+      },
       //列表数据
-      categroys: [
-        { id: "1", categroyName: "精选热菜" },
-        { id: "2", categroyName: "城乡小炒" },
-        { id: "3", categroyName: "田园时蔬" }
-      ],
+      categroys: [],
       //弹出新增框
       dialogVisible: false
     };
@@ -86,19 +78,32 @@ export default {
     "cate-dialog": CateGoryDiaLog
   },
   methods: {
+    //获取分类数据
+    async getCategorys(){
+      const {data:res}= await this.$http.get("/category/list");
+      if (res.code===10000) {
+        this.categroys=res.data;
+      }else{
+        this.$message(res.message);
+      }
+    },
     handleClose() {},
     //弹出框关闭时间，自定义事件
     close() {
+      this.categroy= {
+        'categoryId':0,
+        'categoryName':''
+      }
       this.dialogVisible = false;
     },
     //添加分类
     addCategory() {
-      this.categroy = null;
       this.dialogVisible = true;
     },
     //修改分类
     updateCate(cate) {
-      this.categroy = cate;
+      this.categroy.categoryId=cate.categoryId;
+      this.categroy.categoryName=cate.categoryName;
       this.dialogVisible = true;
     }
   }

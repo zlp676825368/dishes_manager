@@ -23,22 +23,22 @@
           router
         >
           <!--一级菜单-->
-          <el-submenu v-for="item in menus" :key="item.id" :index="item.id">
+          <el-submenu v-for="(item,key) in menus" :key="key" :index="''+key">
             <!--一级菜单模板-->
             <template slot="title">
               <!--一级菜单图标-->
               <i class="el-icon-share"></i>
               <!--一级菜单文本-->
-              <span>{{item.title}}</span>
+              <span>{{item.menuName}}</span>
             </template>
             <!--二级菜单-->
-            <el-menu-item v-for="children in item.children" :key="children.id" :index="'/'+children.path">
+            <el-menu-item v-for="(children,index) in item.children" :key="index" :index="'/'+children.path">
               <!--二级菜单模板-->
               <template slot="title">
                 <!--二级菜单图标-->
                 <i class="el-icon-menu"></i>
                 <!--二级菜单文本-->
-                <span>{{children.title}}</span>
+                <span>{{children.menuName}}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -52,52 +52,31 @@
 </template>
 <script>
 export default {
+  created(){
+    this.getMenus();
+  },
   data() {
     return {
       isCollapse: false,
-      menus: [
-        {
-          title: "菜式管理",
-          id: "1",
-          path: "",
-          children: [
-            { id: "2", title: "分类管理", path: "category" },
-            { id: "3", title: "菜品管理", path: "dishes" }
-          ]
-        },
-        {
-          title: "餐厅配置",
-          id: "4",
-          path: "",
-          children: [
-            { id: "5", title: "基础配置", path: "setting" }
-          ]
-        },
-        {
-          title: "订单管理",
-          id: "6",
-          path: "",
-          children: [
-            { id: "7", title: "今日订单", path: "todayOrder" },
-            { id: "8", title: "历史订单", path: "historyOrder" },
-          ]
-        },
-        {
-          title: "报表统计",
-          id: "9",
-          path: "",
-          children: [
-            { id: "10", title: "图形报表", path: "report" }
-          ]
-        }
-      ]
+      menus: []
     };
   },
   methods: {
+    //获取菜单
+    async getMenus(){
+      const {data:res}= await this.$http.get("/menus");
+      if (res.code===10000) {
+        this.menus=res.data;
+      }else{
+        this.$message(res.message);
+      }  
+    },
+
     toggleButton() {
       this.isCollapse=!this.isCollapse;
     },
     out(){
+      window.sessionStorage.removeItem("token");
       this.$router.replace("/");
     }
   }
