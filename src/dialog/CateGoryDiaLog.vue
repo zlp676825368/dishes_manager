@@ -13,7 +13,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
-      <el-button type="primary">确 定</el-button>
+      <el-button type="primary" @click="save">确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -21,7 +21,7 @@
 export default {
   data() {
     var validateName = (rule, value, callback) => {
-      if (value === null) {
+      if (value === '') {
         callback(new Error("请输入分类名称"));
       } else {
         callback();
@@ -35,7 +35,19 @@ export default {
     };
   },
   methods: {
+    save(){
+      this.$refs.categroy.validate(async valid=>{
+        if (!valid) return;
+        const {data:res}=await this.$http.post("/category",this.categroy);
+        if (res.code===10000) {
+          this.$emit("closeDialog", res.data);
+        }else{
+          this.$message(res.message);
+        }
+      })
+    },
     close() {
+      this.$refs.categroy.clearValidate();
       this.$emit("closeDialog", {});
     },
     open() {
@@ -46,9 +58,6 @@ export default {
       }
 
     }
-  },
-  destroyed(){
-    
   },
   props: {
     dialogVisible: {

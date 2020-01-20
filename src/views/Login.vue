@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="login_box">
-      <!--头像区域-->
+      <!--logo区域-->
       <div class="head">
         <img src="~assets/logo.png" alt />
       </div>
@@ -25,7 +25,7 @@
 <script>
 export default {
   data() {
-    var validateMobile = (rule, value, callback) => {
+    let validateMobile = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("手机号不能为空"));
       }
@@ -35,7 +35,7 @@ export default {
         callback();
       }
     };
-    var validatePwd = (rule, value, callback) => {
+    let validatePwd = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("请填写密码"));
       }

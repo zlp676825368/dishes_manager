@@ -89,12 +89,13 @@ export default {
     },
     handleClose() {},
     //弹出框关闭时间，自定义事件
-    close() {
+    close(categroy) {
       this.categroy= {
         'categoryId':0,
         'categoryName':''
       }
       this.dialogVisible = false;
+      this.getCategorys();
     },
     //添加分类
     addCategory() {
