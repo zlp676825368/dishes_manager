@@ -37,6 +37,7 @@
             ref="fileList"
             list-type="picture"
             :on-change="uploadChange"
+            :before-upload="beforeUpload"
           >
             <el-button size="small" type="primary">点击上传</el-button>
             <span>只能上传jpg/png文件，且不超过500kb</span>
@@ -45,11 +46,11 @@
         <el-form-item label="菜品价格" prop="price">
           <el-input type="number" min="1" v-model="foodData.price"></el-input>
         </el-form-item>
-        <el-form-item label="菜品描述" prop="describe">
-          <el-input type="textarea" :rows="3" placeholder="请输入描述信息" v-model="foodData.describe"></el-input>
+        <el-form-item label="菜品描述" prop="foodDescribe">
+          <el-input type="textarea" :rows="3" placeholder="请输入描述信息" v-model="foodData.foodDescribe"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="mini" @click="save">立即创建</el-button>
+          <el-button type="primary" size="mini" @click="save" :disabled="saveDisabled">立即创建</el-button>
           <el-button size="mini">取消</el-button>
         </el-form-item>
       </el-form>
@@ -80,7 +81,11 @@ export default {
     let validateImg = (rule, value, callback) => {
       if (!this.$refs.fileList.uploadFiles.length) {
         return callback(new Error("请上传菜品图片"));
-      } else {
+      } 
+      if (this.$refs.fileList.uploadFiles[0].size>(0.5 * 1024 * 1024)) {
+        return callback(new Error("图片太大"));
+      }
+      else {
         callback();
       }
     };
@@ -107,6 +112,8 @@ export default {
       header:{
         'Authorization':window.sessionStorage.getItem("token")
       },
+      //提交按钮
+      saveDisabled:false,
       fileList:[],
       //文件上传路径
       uploadPath:'http://192.168.1.5:8080/api/upload',
@@ -117,7 +124,7 @@ export default {
         cateId: null,
         imgUrl: '',
         price: "",
-        describe: ""
+        foodDescribe: ""
       },
       //表单验证规则
       foodDataRules: {
@@ -125,17 +132,23 @@ export default {
         cateId: [{ validator: validateCateId, trigger: "change" }],
         fileList: [{ validator: validateImg, trigger: "change" }],
         price: [{ validator: validatePrice, trigger: "blur" }],
-        describe: [{ validator: validateDescribe, trigger: "blur" }]
+        foodDescribe: [{ validator: validateDescribe, trigger: "blur" }]
       },
       categoryId: null,
       categroys: []
     };
   },
   methods: {
+    //图片上传之前
+    beforeUpload(file){
+      if (file.size>(0.5 * 1024 * 1024)) {
+        return false;
+      }
+    },
     //图片上传完毕回调
-    uploadFile(response, file, fileList){
-      if (response.code===10000) {
-        this.foodData.imgUrl=response.data;
+    uploadFile(res, file, fileList){
+      if (res.code===10000) {
+        this.foodData.imgUrl=res.data;
       } 
     },
     //获取分类数据
@@ -155,19 +168,29 @@ export default {
         this.$refs.foodDataRef.validateField("fileList");
       }
     },
+    //新增菜品
     save() {
       this.$refs.foodDataRef.validate(async valid => {
         if (!valid) return;
-        console.log(this.foodData);
-        
-        
+        this.foodData.price=parseFloat(this.foodData.price);
+        this.saveDisabled=true;
+        const {data:res}= await this.$http.post("/food",this.foodData);
+        if (res.code===10000) {
+          this.$message(res.message);
+          this.$refs.foodDataRef.resetFields();
+          this.fileList=[];
+        }else{
+          this.$message(res.message);
+        }
+        this.saveDisabled=false;
       });
     },
     goBack() {
       this.$router.back(-1);
     },
+    //移除图片
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      
     },
     handlePreview(file) {
       console.log(file);
