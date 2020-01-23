@@ -13,12 +13,12 @@
         <!--头部搜索添加区域-->
         <el-col :span="5">
           <div>
-            <el-input size="mini" v-model="pages.foodName" placeholder="请输入菜品名称" clearable></el-input>
+            <el-input size="mini"  v-model="pages.foodName" placeholder="请输入菜品名称" clearable></el-input>
           </div>
         </el-col>
         <!--下拉选择-->
         <el-col :span="5">
-          <el-select v-model="pages.cateId" size="mini" clearable placeholder="请选择">
+          <el-select v-model="pages.cateId" @clear="clearSelect" size="mini" clearable placeholder="请选择">
             <el-option
               v-for="(item,index) in categroys"
               :key="index"
@@ -108,9 +108,7 @@ export default {
   methods: {
     //获取分页数据
     async getFoods(){
-      const {data:res}=await this.$http.post("/food/pages",this.pages);
-      console.log("-----------查询分页");
-      
+      const {data:res}=await this.$http.post("/food/pages",this.pages); 
       if (res.code===10000) {
         this.foods=res.data.rows;
         this.pages.total=res.data.total;
@@ -123,6 +121,13 @@ export default {
       this.pages.pageIndex=1;
       this.getFoods();
     },
+    //下拉清空按钮事件
+    clearSelect(){
+      console.log("11111111");
+      
+      this.pages.cateId=null;
+    },
+  
     //获取分类数据
     async getCategroys(){
       const {data:res}=await this.$http.get("/category/list");
@@ -143,12 +148,9 @@ export default {
     },
     handleSizeChange() {
       this.pages.pageIndex=1;
-      
       this.getFoods();
     },
     handleCurrentChange() {
-      this.pages.pageIndex=1;
-      
       this.getFoods();
     }
   }
