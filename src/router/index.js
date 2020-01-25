@@ -22,7 +22,9 @@ const routes = [
         //   {name:'dishes-detail', path:'/detail',component: () => import('components/dishe/DishesDetail.vue')}
         // ]
       },
-      {name:'dishes-detail', path:'/dishesDetail',component: () => import('components/dishe/DishesDetail.vue')},
+      {path:'/addDishes',component: () => import('components/dishe/AddDishes.vue')},
+      {path:'/editDishes',component: () => import('components/dishe/EditDishes.vue')},
+      {path:'/dishesDetail',component: () => import('components/dishe/DishesDetail.vue')},
       { path: '/historyOrder', component: () => import('components/HistoryOrder.vue') },
       { path: '/report', component: () => import('components/Report.vue') },
       { path: '/setting', component: () => import('components/Setting.vue') },

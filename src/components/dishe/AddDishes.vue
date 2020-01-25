@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <el-page-header @back="goBack" content="菜品详情"></el-page-header>
+    <el-page-header @back="goBack" content="添加菜品"></el-page-header>
     <el-card>
       <el-form
         :label-position="labelPosition"

@@ -46,6 +46,16 @@
         <el-table-column prop="price" label="单价"></el-table-column>
         <el-table-column label="操作">
           <template>
+            <!--详情按钮-->
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="详情"
+              placement="left"
+              :enterable="false"
+            >
+              <el-button @click="detail" type="primary" size="mini" icon="el-icon-document"></el-button>
+            </el-tooltip>
             <!--修改按钮-->
             <el-tooltip
               class="item"
@@ -54,14 +64,14 @@
               placement="top-start"
               :enterable="false"
             >
-              <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
+              <el-button  @click="edit" type="primary" size="mini" icon="el-icon-edit"></el-button>
             </el-tooltip>
             <!--删除按钮-->
             <el-tooltip
               class="item"
               effect="dark"
               content="删除"
-              placement="top-start"
+              placement="right"
               :enterable="false"
             >
               <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
@@ -122,9 +132,7 @@ export default {
       this.getFoods();
     },
     //下拉清空按钮事件
-    clearSelect(){
-      console.log("11111111");
-      
+    clearSelect(){  
       this.pages.cateId=null;
     },
   
@@ -140,7 +148,19 @@ export default {
     //添加菜品
     addDishes() {
       this.$router.push({
+        path:'/addDishes'
+      });
+    },
+    //菜品详情
+    detail(){
+      this.$router.push({
         path:'/dishesDetail'
+      });
+    },
+    //修改菜品
+    edit(){
+      this.$router.push({
+        path:'/editDishes'
       });
     },
     closeDialog(){
