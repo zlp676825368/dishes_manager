@@ -60,6 +60,7 @@
 <script>
 export default {
   created() {
+    this.getFood(this.$route.params.foodId);
     this.getCategorys();
   },
   data() {
@@ -114,7 +115,7 @@ export default {
       },
       //提交按钮
       saveDisabled:false,
-      fileList:[],
+      
       //文件上传路径
       uploadPath:'http://192.168.1.5:8080/api/upload',
       //表单对象
@@ -126,6 +127,8 @@ export default {
         price: "",
         foodDescribe: ""
       },
+      img:"",
+      fileList: [{name: 'food.jpeg', url: this.img}],
       //表单验证规则
       foodDataRules: {
         foodName: [{ validator: validateFoodName, trigger: "blur" }],
@@ -139,6 +142,15 @@ export default {
     };
   },
   methods: {
+    async getFood(foodId){
+      const {data:res}=await this.$http.get("/food/"+foodId); 
+      if (res.code===10000) {
+        this.foodData=res.data;
+        this.img=res.data.imgUrl;
+      } else {
+        this.$message(res.message);
+      }
+    },
     //图片上传之前
     beforeUpload(file){
       if (file.size>(0.5 * 1024 * 1024)) {

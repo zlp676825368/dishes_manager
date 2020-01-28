@@ -45,7 +45,7 @@
         <el-table-column prop="foodName" label="菜品名称"></el-table-column>
         <el-table-column prop="price" label="单价"></el-table-column>
         <el-table-column label="操作">
-          <template>
+          <template slot-scope="scope">
             <!--详情按钮-->
             <el-tooltip
               class="item"
@@ -53,8 +53,9 @@
               content="详情"
               placement="left"
               :enterable="false"
+              
             >
-              <el-button @click="detail" type="primary" size="mini" icon="el-icon-document"></el-button>
+              <el-button @click="detail(scope.row)" type="primary" size="mini" icon="el-icon-document"></el-button>
             </el-tooltip>
             <!--修改按钮-->
             <el-tooltip
@@ -64,7 +65,7 @@
               placement="top-start"
               :enterable="false"
             >
-              <el-button  @click="edit" type="primary" size="mini" icon="el-icon-edit"></el-button>
+              <el-button  @click="edit(scope.row)" type="primary" size="mini" icon="el-icon-edit"></el-button>
             </el-tooltip>
             <!--删除按钮-->
             <el-tooltip
@@ -152,15 +153,15 @@ export default {
       });
     },
     //菜品详情
-    detail(){
+    detail(food){
       this.$router.push({
-        path:'/dishesDetail'
+        path:'/dishesDetail/'+food.foodId
       });
     },
     //修改菜品
-    edit(){
+    edit(food){
       this.$router.push({
-        path:'/editDishes'
+        path:'/editDishes/'+food.foodId
       });
     },
     closeDialog(){

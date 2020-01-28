@@ -23,8 +23,8 @@ const routes = [
         // ]
       },
       {path:'/addDishes',component: () => import('components/dishe/AddDishes.vue')},
-      {path:'/editDishes',component: () => import('components/dishe/EditDishes.vue')},
-      {path:'/dishesDetail',component: () => import('components/dishe/DishesDetail.vue')},
+      {path:'/editDishes/:foodId',component: () => import('components/dishe/EditDishes.vue')},
+      {path:'/dishesDetail/:foodId',component: () => import('components/dishe/DishesDetail.vue')},
       { path: '/historyOrder', component: () => import('components/HistoryOrder.vue') },
       { path: '/report', component: () => import('components/Report.vue') },
       { path: '/setting', component: () => import('components/Setting.vue') },
