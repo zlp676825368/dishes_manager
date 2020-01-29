@@ -28,6 +28,7 @@ import {
     Upload,
     Tabs,
     TabPane,
+    MessageBox,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -61,3 +62,4 @@ Vue.use(Upload)
 Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
