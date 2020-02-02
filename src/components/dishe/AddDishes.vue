@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <el-page-header @back="goBack" content="添加菜品"></el-page-header>
-    <el-card>
+    
       <el-form
         :label-position="labelPosition"
         label-width="80px"
@@ -54,7 +54,7 @@
           <el-button size="mini">取消</el-button>
         </el-form-item>
       </el-form>
-    </el-card>
+    
   </div>
 </template>
 <script>
@@ -200,15 +200,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .content {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   .el-page-header {
     line-height: 40px;
   }
-  .el-card {
-    flex: 1;
-    position: relative;
+  
     .el-form {
       position: absolute;
       width: 50%;
@@ -218,6 +214,6 @@ export default {
         width: 100%;
       }
     }
-  }
+  
 }
 </style>

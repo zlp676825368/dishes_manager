@@ -29,8 +29,12 @@ import {
     Tabs,
     TabPane,
     MessageBox,
+    Divider,
+    Scrollbar,
+    Drawer
 } from 'element-ui'
-
+Vue.use(Drawer)
+Vue.use(Scrollbar)
 Vue.use(Button)
 Vue.use(Form)
 Vue.use(FormItem)
@@ -61,5 +65,6 @@ Vue.use(PageHeader)
 Vue.use(Upload)
 Vue.use(Tabs)
 Vue.use(TabPane)
+Vue.use(Divider)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

@@ -45,7 +45,9 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <router-view></router-view>
+        <el-scrollbar>
+          <router-view></router-view>
+        </el-scrollbar>
       </el-main>
     </el-container>
   </el-container>
@@ -89,6 +91,19 @@ export default {
 .el-main{
   padding: 10px;
 }
+.el-scrollbar{
+  height: 100%;
+}
+.el-scrollbar__bar{
+  &.is-vertical{
+    width:100px;//滚动条宽度
+  }
+}
+.el-scrollbar__wrap{
+  overflow-y: scroll;
+  overflow-x:hidden;
+}
+
 .el-header {
   background-color: #373d41;
   display: flex;
