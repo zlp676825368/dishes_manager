@@ -32,7 +32,11 @@
               <span>{{item.menuName}}</span>
             </template>
             <!--二级菜单-->
-            <el-menu-item v-for="(children,index) in item.children" :key="index" :index="'/'+children.path">
+            <el-menu-item
+              v-for="(children,index) in item.children"
+              :key="index"
+              :index="'/'+children.path"
+            >
               <!--二级菜单模板-->
               <template slot="title">
                 <!--二级菜单图标-->
@@ -54,8 +58,33 @@
 </template>
 <script>
 export default {
-  created(){
+  created() {
     this.getMenus();
+
+    Date.prototype.Format = function(fmt) {
+      //author: meizz
+      var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds() //秒 
+      };
+      if (/(y+)/.test(fmt))
+        fmt = fmt.replace(
+          RegExp.$1,
+          (this.getFullYear() + "").substr(4 - RegExp.$1.length)
+        );
+      for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+          fmt = fmt.replace(
+            RegExp.$1,
+            RegExp.$1.length == 1
+              ? o[k]
+              : ("00" + o[k]).substr(("" + o[k]).length)
+          );
+      return fmt;
+    };
   },
   data() {
     return {
@@ -65,19 +94,19 @@ export default {
   },
   methods: {
     //获取菜单
-    async getMenus(){
-      const {data:res}= await this.$http.get("/menus");
-      if (res.code===10000) {
-        this.menus=res.data;
-      }else{
+    async getMenus() {
+      const { data: res } = await this.$http.get("/menus");
+      if (res.code === 10000) {
+        this.menus = res.data;
+      } else {
         this.$message(res.message);
-      }  
+      }
     },
 
     toggleButton() {
-      this.isCollapse=!this.isCollapse;
+      this.isCollapse = !this.isCollapse;
     },
-    out(){
+    out() {
       window.sessionStorage.removeItem("token");
       this.$router.replace("/");
     }
@@ -88,20 +117,20 @@ export default {
 .el-container {
   height: 100%;
 }
-.el-main{
+.el-main {
   padding: 10px;
 }
-.el-scrollbar{
+.el-scrollbar {
   height: 100%;
 }
-.el-scrollbar__bar{
-  &.is-vertical{
-    width:100px;//滚动条宽度
+.el-scrollbar__bar {
+  &.is-vertical {
+    width: 100px; //滚动条宽度
   }
 }
-.el-scrollbar__wrap{
+.el-scrollbar__wrap {
   overflow-y: scroll;
-  overflow-x:hidden;
+  overflow-x: hidden;
 }
 
 .el-header {

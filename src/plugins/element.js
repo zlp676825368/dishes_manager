@@ -31,8 +31,10 @@ import {
     MessageBox,
     Divider,
     Scrollbar,
-    Drawer
+    Drawer,
+    TimeSelect
 } from 'element-ui'
+Vue.use(TimeSelect)
 Vue.use(Drawer)
 Vue.use(Scrollbar)
 Vue.use(Button)

@@ -16,3 +16,18 @@ html,body{
 .el-card__body {
     padding: 0 !important;
   }
+  .el-dialog{
+      border-radius: 10px;
+  }
+  .el-dialog__header{
+      border-bottom: 1px solid #eee;
+  }
+  .el-dialog__body{
+      padding: 10px;
+  }
+  .el-dialog__footer{
+    border-top: 1px solid #eee;
+  }
+  .el-dialog__title{
+      font-weight: 700;
+  }

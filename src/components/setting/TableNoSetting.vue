@@ -29,8 +29,7 @@
           <label>{{tab.tabNo |tabNo}}</label>
           <label>{{tab.tabNo |tabNoType}}{{tab.tabAlias?'（'+tab.tabAlias+'）':''}}</label>
         </div>
-        <el-button type="primary" @click="openOrder" icon="el-icon-edit">开单</el-button>
-        <el-button type="primary" icon="el-icon-share">预定</el-button>
+        <el-button type="primary" @click="openOrder" icon="el-icon-share">预定</el-button>
       </div>
       <div v-else class="usage">
         <div class="head">
