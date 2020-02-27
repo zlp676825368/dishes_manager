@@ -1,57 +1,43 @@
 <template>
-  <div class="content">
-    <div v-for="(item,index) in tabs" :key="index">
-      <p>{{item.name}}({{item.list.length}})</p>
-      <el-divider></el-divider>
-      <div class="item">
-        <el-card v-for="(tab,index) in item.list" :key="index" shadow="hover">
-          <div @click="itemClick(tab)">
-            <div :class="[tab.state==0?'head':'head-active']">
-              <label>{{tab.tabNo |tabNo}}</label>
-              <label>{{tab.tabNo |tabNoType}}{{tab.tabAlias?'（'+tab.tabAlias+'）':''}}</label>
+  <el-row>
+    <el-col :span="18">
+      <div v-for="(item,index) in tabs" :key="index">
+        <p>{{item.name}}({{item.list.length}})</p>
+        <el-divider></el-divider>
+        <div class="item">
+          <el-card v-for="(tab,index) in item.list" :key="index" shadow="hover">
+            <div @click="itemClick(tab)">
+              <div :class="[tab.state==0?'head':'head-active']">
+                <label>{{tab.tabNo |tabNo}}</label>
+                <label>{{tab.tabNo |tabNoType}}{{tab.tabAlias?'（'+tab.tabAlias+'）':''}}</label>
+              </div>
+              <div v-if="tab.state==0" class="body">空闲中</div>
+              <div v-else class="body-active">预定中</div>
             </div>
-            <div v-if="tab.state==0" class="body">空闲中</div>
-            <div v-else class="body-active">预定中</div>
-          </div>
-        </el-card>
-      </div>
-    </div>
-    <el-drawer
-      title=""
-      :visible.sync="drawer"
-      :with-header="false"
-      :modal-append-to-body="false"
-      :size="'20%'"
-      :modal="false"
-    >
-      <div v-if="tab.state==0" class="leisure">
-        <div class="head">
-          <label>{{tab.tabNo |tabNo}}</label>
-          <label>{{tab.tabNo |tabNoType}}{{tab.tabAlias?'（'+tab.tabAlias+'）':''}}</label>
-        </div>
-        <el-button type="primary" @click="openOrder" icon="el-icon-share">预定</el-button>
-      </div>
-      <div v-else class="usage">
-        <div class="head">
-          <label>{{tab.tabNo |tabNo}}</label>
-          <label>{{tab.tabNo |tabNoType}}{{tab.tabAlias?'（'+tab.tabAlias+'）':''}}</label>
+          </el-card>
         </div>
       </div>
-    </el-drawer>
-    <open-order :tab="tab" :dialogVisible="dialogVisible" @closeDialog="closeDialog"></open-order>
-  </div>
+    </el-col>
+    <el-col :span="6">
+      <tab-drawer :isOpen="isOpen" :tab="tab" @closeDrawer="closeDrawer"></tab-drawer>
+    </el-col>
+<!--    <open-order :tab="tab" :dialogVisible="dialogVisible" @closeDialog="closeDialog"></open-order>-->
+  </el-row>
 </template>
 <script>
-import OpenOrder from 'dialog/OpenOrder'
+import OpenOrder from "dialog/OpenOrder";
+import TabDrawer from "drawer/Tab";
 export default {
   components: {
-      'open-order':OpenOrder
+    "open-order": OpenOrder,
+    "tab-drawer": TabDrawer
   },
   data() {
     return {
       drawer: false,
-      tab: {tabNo:'a001',tabAlias:null},
-      dialogVisible:false
+      tab:{},
+      dialogVisible: false,
+      isOpen:false
     };
   },
   filters: {
@@ -64,14 +50,18 @@ export default {
   },
   methods: {
     itemClick(tab) {
+      this.isOpen=true;
       this.drawer = true;
       this.tab = tab;
     },
-    openOrder(){
-        this.dialogVisible=true;
+    closeDrawer(){
+      this.isOpen=false;
     },
-    closeDialog(){
-        this.dialogVisible=false;
+    openOrder() {
+      this.dialogVisible = true;
+    },
+    closeDialog() {
+      this.dialogVisible = false;
     }
   },
   props: {
@@ -83,8 +73,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.content {
-  background-color: #f5f3ed;
+.el-row {
+  position: relative;
   p {
     text-align: center;
     font-weight: 700;
@@ -152,29 +142,29 @@ export default {
     font-size: 12px;
   }
 }
-.usage{
-    display: flex;
-    flex-direction: column;
-    .head{
-        line-height: 60px;
-        border-bottom: 1px solid #eee;
-        text-align: center;
-        font-size: 22px;
-    }
+.usage {
+  display: flex;
+  flex-direction: column;
+  .head {
+    line-height: 60px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    font-size: 22px;
+  }
 }
-.leisure{
-    display: flex;
-    flex-direction: column;
-    .el-button{
-        width: 180px;
-        height: 60px;
-        margin: 100px 50px;
-    }
-    .head{
-        line-height: 60px;
-        border-bottom: 1px solid #eee;
-        text-align: center;
-        font-size: 22px;
-    }
+.leisure {
+  display: flex;
+  flex-direction: column;
+  .el-button {
+    width: 180px;
+    height: 60px;
+    margin: 100px 50px;
+  }
+  .head {
+    line-height: 60px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    font-size: 22px;
+  }
 }
 </style>

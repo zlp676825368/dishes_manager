@@ -215,10 +215,10 @@ export default {
         if (!valid) return;
         this.order.arriveTime =
           new Date().Format("yyyy-MM-dd ") + this.order.arriveTime + ":00";
-        console.log(this.order);
-
         const { data: res } = await this.$http.post("/order", this.order);
         if (res.code === 10000) {
+          console.log(res.data);
+          
           this.order.reserveTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
           this.order.arriveTime = null;
           this.$refs.orderRef.clearValidate();
